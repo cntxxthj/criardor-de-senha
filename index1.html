@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-dark bg-body-tertiary px-1 py-2" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Calculadora de IMC</a>
+        </div>
+      </nav>
+      
+          <div class="container card px-0 mt-2">
+              <div class="bg-light px-2 py-3 d-flex align-items-center">
+                  <h5 class="mb-0 me-2 ">IMC</h5>
+                  <p class="mb-0">Calculo de Índice Corporal</p>
+              </div>
+      
+              <div class="row px-2">
+                  <div class="col">
+                      <h5 class="mb-2">Informações do Paciente</h5>
+
+                      <div class="input-group mb-3">
+                          <span class="input-group-text" id="span-peso">Peso</span>
+                          <input id="peso" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="span-peso">
+                        </div>
+      
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="span-altura">Altura</span>
+                          <input id="altura" class="form-control" aria-label="Sizing example input" aria-describedby="span-altura">
+                        </div>
+      
+                  <div class="d-flex align-intems-center py-1">
+                      <input class="me-2" type="radio" name="faixa-etaria" checked id="idoso" value="idoso">
+                      <label for="idoso">Idoso: Idade > 65</label>               
+                  </div>
+      
+                  <div class="d-flex align-intems-center py-1">
+                      <input class="me-1" type="radio" name="faixa-etaria" id="adulto" value="adulto">
+                      <label for="adulto">Adulto: Idade <= 65</label>               
+                  </div>
+
+                  <button onclick="calculaIMC()" type="button" class="btn btn-primary my-3 px-4">Calcular</button>
+
+            </div>
+                <div class="col">
+                  <p id="resultado">
+                    Preencha as Informações para saber seu IMC
+                  </p>
+              </div>
+            </div>
+        </div>
+
+    <script>
+        function calculaIMC(){
+            const peso = Number(document.getElementById('peso').value);
+            const altura = Number(document.getElementById('altura').value);
+            const faixa_etaria = document.querySelector('input[name="faixa-etaria"]:checked').value;
+            const imc = +(peso / (altura ** 2)).toFixed('2');
+            let resultado = document.getElementById('resultado');
+            let classificacao = "";
+            
+            if(imc < 18.5 && faixa_etaria === 'adulto'){
+                classificacao = "Baixo peso";
+            }else if(imc < 24.9 && faixa_etaria === 'adulto'){
+                classificacao = "Peso Normal"
+            }else if(imc < 29.9 && faixa_etaria === 'adulto'){
+                classificacao = "Excesso de peso"
+            }else if(imc < 34.9 && faixa_etaria === 'adulto'){
+                classificacao = "Obesidade de classe 1"
+            }else if(imc < 39.9 && faixa_etaria === 'adulto'){
+                classificacao = "Obesidade de classe 2"
+            }else if(imc > 40 && faixa_etaria === 'adulto'){
+                classificacao = "Obesidade de classe 2"
+            }
+
+            resultado.innerHTML = `<p>Resultado <br> ${faixa_etaria === "adulto" ? 'Adulto' : 'Idoso'} ${altura}m ${peso}Kg <br><br> IMC = ${imc}</p>`;
+
+
+
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
